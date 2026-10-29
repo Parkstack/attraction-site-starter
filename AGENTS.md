@@ -2,6 +2,14 @@
 
 This website or app shows a visitor attraction's details and sells its tickets through the Parkstack API. The park edits everything in Parkstack; this site or app only reads it. Do not hard-code park content, and never make any up: every attraction, price, opening time and event comes from the API.
 
+## Start here
+
+1. You need the park's site key (it starts `pk_live_`). If you were not given one, ask for it; to look around first, use the demo key below.
+2. Call `GET https://api.parkstack.net/site/v1/park` with `Authorization: Bearer <key>` and check `name` is the park you are building for. If you cannot reach the internet, stop and say so: never carry on with made-up data.
+3. Read the rules below, then build each page or screen from its address in Addresses: opening hours from /hours, attractions from /attractions, and so on.
+4. Sell tickets with GET /tickets, GET /tickets/availability and POST /checkout. Guests always pay on Stripe's page.
+5. When something is refused, the answer's `code` says why and `message` says what to do. The full reference with real example answers is https://parkstack.net/developers/reference.
+
 ## Which park
 
 - The key decides the park. Use the key you were given for the park you are building for, from an environment variable or the app's configuration.
