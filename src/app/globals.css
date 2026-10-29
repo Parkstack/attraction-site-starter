@@ -1,0 +1,70 @@
+/* Plain CSS so the starter is easy to restyle. The park's own colours arrive as --main and --accent. */
+:root {
+  --main: #0f766e;
+  --accent: #f5c542;
+  --ink: #14221f;
+  --muted: #55625f;
+  --line: #dfe4e2;
+  --surface: #f4f6f5;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); line-height: 1.55; background: #fff; display: flex; min-height: 100vh; flex-direction: column; }
+main { flex: 1; }
+a { color: var(--main); }
+img { max-width: 100%; height: auto; display: block; }
+h1, h2, h3 { line-height: 1.15; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 0.5rem; }
+.wrap { max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
+.section { padding: 2.5rem 0; }
+.muted { color: var(--muted); }
+.small { font-size: 0.875rem; color: var(--muted); }
+.demo { margin: 0; padding: 0.5rem 1rem; background: var(--accent); color: var(--ink); text-align: center; font-size: 0.875rem; font-weight: 600; }
+
+.site-header { border-bottom: 1px solid var(--line); }
+.header-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.brand { font-weight: 800; font-size: 1.25rem; color: var(--ink); text-decoration: none; }
+.logo { height: 48px; width: auto; }
+.site-header nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; }
+.site-header nav a { color: var(--ink); text-decoration: none; font-weight: 600; }
+.button, .site-header nav a.button { display: inline-block; background: var(--main); color: #fff; padding: 0.6rem 1.1rem; border-radius: 6px; font-weight: 700; text-decoration: none; border: 0; font: inherit; cursor: pointer; }
+.button:disabled { opacity: 0.6; cursor: default; }
+
+.hero { background: var(--main); color: #fff; padding: 3.5rem 0; }
+.hero a.button { background: #fff; color: var(--main); }
+.hero p { font-size: 1.15rem; max-width: 40rem; }
+
+.cards { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); list-style: none; padding: 0; margin: 1.25rem 0 0; }
+.card { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+.card a { color: inherit; text-decoration: none; display: block; height: 100%; }
+.card img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+.card-body { padding: 0.9rem 1rem 1.1rem; }
+.card h3 { margin: 0 0 0.25rem; font-size: 1.1rem; }
+.badge { display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 0.1rem 0.45rem; border-radius: 4px; background: var(--surface); color: var(--ink); margin-right: 0.35rem; }
+.badge.new { background: var(--accent); }
+
+.prose p, .prose ul { margin: 0 0 1rem; max-width: 42rem; }
+.gallery { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); margin: 1.5rem 0; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1.5rem; margin: 1.25rem 0; }
+.facts dt { font-weight: 700; }
+.facts dd { margin: 0; }
+
+.hours { width: 100%; border-collapse: collapse; max-width: 40rem; }
+.hours th, .hours td { text-align: left; padding: 0.55rem 0.25rem; border-bottom: 1px solid var(--line); }
+.hours td.label { color: var(--muted); }
+
+.notice { border-top: 2px solid var(--ink); margin-top: 2rem; padding-top: 1rem; max-width: 42rem; }
+.faq-q { font-weight: 700; margin: 1.25rem 0 0.25rem; }
+
+.ticket-form fieldset { border: 0; padding: 0; margin: 0 0 1.5rem; }
+.ticket-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; border-bottom: 1px solid var(--line); padding: 0.9rem 0; }
+.ticket-row input { width: 4.5rem; padding: 0.4rem; font: inherit; }
+.field { display: block; margin: 0 0 1rem; }
+.field input, .field select { display: block; margin-top: 0.3rem; width: 100%; max-width: 24rem; padding: 0.55rem; font: inherit; border: 1px solid #8a9592; border-radius: 6px; }
+.error { color: #b42318; font-weight: 600; }
+.total { font-size: 1.15rem; font-weight: 700; }
+
+.site-footer { border-top: 1px solid var(--line); margin-top: 3rem; padding: 2rem 0 1rem; background: var(--surface); }
+.footer-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); padding-bottom: 1rem; }
+.footer-name { font-weight: 800; margin-top: 0; }
+.site-footer p { margin: 0 0 0.35rem; }
