@@ -1,13 +1,19 @@
-# Building a park's website on the Parkstack API
+# Building a park's website or app on the Parkstack API
 
-This website shows a visitor attraction's details and sells its tickets through the Parkstack API. The park edits everything in Parkstack; this site only reads it. Do not hard-code park content.
+This website or app shows a visitor attraction's details and sells its tickets through the Parkstack API. The park edits everything in Parkstack; this site or app only reads it. Do not hard-code park content, and never make any up: every attraction, price, opening time and event comes from the API.
+
+## Which park
+
+- The key decides the park. Use the key you were given for the park you are building for, from an environment variable or the app's configuration.
+- The public demo key `pk_live_demoRiversideParkstackSiteApiKey` always reads Riverside Adventure Park, a demonstration park. Use it only when you were given no key, or to try checkout without paying; never to build another park's site or app.
+- Before writing any code, call `GET /park` with the key and check that `name` is the park you were asked to build for. If it is not, stop and say so.
 
 ## Calling the API
 
 - Base address: `https://api.parkstack.net/site/v1`
 - Send the site key on every request: `Authorization: Bearer <key>`. Read it from an environment variable (for example `PARKSTACK_SITE_KEY`); never commit a park's key.
-- While building, use the public demo key `pk_live_demoRiversideParkstackSiteApiKey`. It reads Riverside, a demonstration park whose checkout takes no payment.
-- Call from the server (server components, route handlers, server actions) where possible.
+- With no key yet, the demo key (above) lets you build against real answers; swap in the park's key before showing it to the park.
+- On a website, call from the server (server components, route handlers, server actions) where possible. A phone app calls the API itself (see Building a phone app).
 - Answers are JSON. Refusals are `{ code, message }`; react to `code`, show `message` to guests.
 - Cache for 60 seconds (Cache-Control says so). Each key may make 120 or more requests a minute.
 - Full reference with example answers: https://parkstack.net/developers/reference (OpenAPI: https://parkstack.net/developers/openapi.json). Guides: https://parkstack.net/developers/guides.
@@ -46,7 +52,7 @@ This website shows a visitor attraction's details and sells its tickets through 
 - Cache answers for a minute, as Cache-Control says. A published change appears within about a minute.
 - Call the API from your server where you can. A key used from browsers must list only your own website addresses, so another site cannot borrow it. A phone app uses a key made for an app.
 - Use the same addresses as Parkstack's guest site (SITE_API_GUEST_PATHS), such as /explore/attractions/{slug}. When the park switches to its own website, Parkstack sends old links and search results to the same address on yours, and GET /redirects answers in these addresses.
-- Do not invent content: show only what the park published, and leave out what is empty.
+- Never invent park content, not even as sample data for previews or tests: no made-up attractions, prices, hours or events. Show only what the API returns, and leave out what is empty. For previews and tests use a real answer (the example answers in the reference are real Riverside answers). If the API cannot be reached, say so rather than filling the gap.
 
 ## Text and images
 
@@ -57,7 +63,7 @@ This website shows a visitor attraction's details and sells its tickets through 
 ## Building a phone app
 
 - Ask the park's owner for a key made for a phone app (Park settings → Your own website → Make a key → A phone app). Its limit applies to each phone. It only reads what the park published, so it may be built into the app, but never commit a park's key to a public repository.
-- Call the API from the app. Keep the last answers on the phone and show them when there is no signal, with when they were last updated.
+- The app reads the park's content from the API when it runs: nothing about the park is built into the app except its key. Keep the last answers on the phone and show them when there is no signal, with when they were last updated.
 - Checkout: POST /checkout without `returnUrl` or `cancelUrl`. Keep the answer's `orderNumber` and `linkToken` on the phone (the iOS Keychain, or Android's encrypted storage). Open `url` in the system's in-app browser (SFSafariViewController or ASWebAuthenticationSession on iOS, Custom Tabs on Android), never an embedded web view, so Apple Pay and Google Pay work.
 - When the guest closes the payment page or comes back to the app, read GET /orders/{orderNumber}?t={linkToken} every few seconds while `status` is PENDING. At PAID, show the tickets. If it is still PENDING after about two minutes, say the tickets will also arrive by email. Never offer to pay again for the same order.
 - Tickets: draw each ticket's `qrPayload` as a large QR code on a white background, one per guest, and keep them on the phone so they open with no signal at the gate. A refunded ticket has no QR code.
