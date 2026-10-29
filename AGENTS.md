@@ -10,7 +10,7 @@ This website shows a visitor attraction's details and sells its tickets through 
 - Call from the server (server components, route handlers, server actions) where possible.
 - Answers are JSON. Refusals are `{ code, message }`; react to `code`, show `message` to guests.
 - Cache for 60 seconds (Cache-Control says so). Each key may make 120 or more requests a minute.
-- Full reference: https://parkstack.net/developers/reference (OpenAPI: https://parkstack.net/developers/openapi.json).
+- Full reference with example answers: https://parkstack.net/developers/reference (OpenAPI: https://parkstack.net/developers/openapi.json). Guides: https://parkstack.net/developers/guides.
 - A complete working example in Next.js: https://github.com/Parkstack/attraction-site-starter
 
 ## Addresses
