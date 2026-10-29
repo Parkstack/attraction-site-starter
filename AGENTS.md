@@ -44,7 +44,7 @@ This website shows a visitor attraction's details and sells its tickets through 
 - While tickets.onSaleOnline is false, show nothing to buy.
 - Show refusal messages to guests as they are: they are written for them.
 - Cache answers for a minute, as Cache-Control says. A published change appears within about a minute.
-- Call the API from your server where you can. A key used from browsers must list only your own website addresses, so another site cannot borrow it.
+- Call the API from your server where you can. A key used from browsers must list only your own website addresses, so another site cannot borrow it. A phone app uses a key made for an app.
 - Use the same addresses as Parkstack's guest site (SITE_API_GUEST_PATHS), such as /explore/attractions/{slug}. When the park switches to its own website, Parkstack sends old links and search results to the same address on yours, and GET /redirects answers in these addresses.
 - Do not invent content: show only what the park published, and leave out what is empty.
 
@@ -53,6 +53,16 @@ This website shows a visitor attraction's details and sells its tickets through 
 - Descriptions, answers and page text are Markdown with bold, links and bulleted lists only. Render it safely (no raw HTML).
 - Images have `url`, `width`, `height`, `alt` and `srcset`. `alt: null` means decorative: use `alt=""`.
 - Dates are `YYYY-MM-DD` and times `HH:mm` on the park's clock (`timezone` on `/park`).
+
+## Building a phone app
+
+- Ask the park's owner for a key made for a phone app (Park settings → Your own website → Make a key → A phone app). Its limit applies to each phone. It only reads what the park published, so it may be built into the app, but never commit a park's key to a public repository.
+- Call the API from the app. Keep the last answers on the phone and show them when there is no signal, with when they were last updated.
+- Checkout: POST /checkout without `returnUrl` or `cancelUrl`. Keep the answer's `orderNumber` and `linkToken` on the phone (the iOS Keychain, or Android's encrypted storage). Open `url` in the system's in-app browser (SFSafariViewController or ASWebAuthenticationSession on iOS, Custom Tabs on Android), never an embedded web view, so Apple Pay and Google Pay work.
+- When the guest closes the payment page or comes back to the app, read GET /orders/{orderNumber}?t={linkToken} every few seconds while `status` is PENDING. At PAID, show the tickets. If it is still PENDING after about two minutes, say the tickets will also arrive by email. Never offer to pay again for the same order.
+- Tickets: draw each ticket's `qrPayload` as a large QR code on a white background, one per guest, and keep them on the phone so they open with no signal at the gate. A refunded ticket has no QR code.
+- Guests pay on Stripe's page for tickets used at the park, so do not use in-app purchase for them.
+- With the demo key, checkout answers with `demo: true` and no order: show its `url`, which explains that nothing was charged.
 
 ## Page addresses
 
