@@ -57,10 +57,10 @@ This website or app shows a visitor attraction's details and sells its tickets t
 - After payment, use Parkstack's confirmation page (the default), or read GET /orders/{orderNumber} and show every ticket's QR code.
 - While tickets.onSaleOnline is false, show nothing to buy.
 - Show refusal messages to guests as they are: they are written for them.
+- Never invent park content, not even as sample data for previews or tests: no made-up attractions, prices, hours or events. Show only what the API returns, and leave out what is empty. For previews and tests use a real answer (the example answers in the reference are real Riverside answers). If the API cannot be reached, say so rather than filling the gap.
 - Cache answers for a minute, as Cache-Control says. A published change appears within about a minute.
 - Call the API from your server where you can. A key used from browsers must list only your own website addresses, so another site cannot borrow it. A phone app uses a key made for an app.
-- Use the same addresses as Parkstack's guest site (SITE_API_GUEST_PATHS), such as /explore/attractions/{slug}. When the park switches to its own website, Parkstack sends old links and search results to the same address on yours, and GET /redirects answers in these addresses.
-- Never invent park content, not even as sample data for previews or tests: no made-up attractions, prices, hours or events. Show only what the API returns, and leave out what is empty. For previews and tests use a real answer (the example answers in the reference are real Riverside answers). If the API cannot be reached, say so rather than filling the gap.
+- Use the same addresses as Parkstack's guest site (listed under Page addresses below), such as /explore/attractions/{slug}. When the park switches to its own website, Parkstack sends old links and search results to the same address on yours, and GET /redirects answers in these addresses.
 
 ## Text and images
 
@@ -70,7 +70,7 @@ This website or app shows a visitor attraction's details and sells its tickets t
 
 ## Building a phone app
 
-- Ask the park's owner for a key made for a phone app (Park settings → Your own website → Make a key → A phone app). Its limit applies to each phone. It only reads what the park published, so it may be built into the app, but never commit a park's key to a public repository.
+- Ask the park's owner for a key made for a phone app (Developers → Make a key → A phone app, in the Parkstack console). Its limit applies to each phone. It only reads what the park published, so it may be built into the app, but never commit a park's key to a public repository.
 - The app reads the park's content from the API when it runs: nothing about the park is built into the app except its key. Keep the last answers on the phone and show them when there is no signal, with when they were last updated.
 - Checkout: POST /checkout without `returnUrl` or `cancelUrl`. Keep the answer's `orderNumber` and `linkToken` on the phone (the iOS Keychain, or Android's encrypted storage). Open `url` in the system's in-app browser (SFSafariViewController or ASWebAuthenticationSession on iOS, Custom Tabs on Android), never an embedded web view, so Apple Pay and Google Pay work.
 - When the guest closes the payment page or comes back to the app, read GET /orders/{orderNumber}?t={linkToken} every few seconds while `status` is PENDING. At PAID, show the tickets. If it is still PENDING after about two minutes, say the tickets will also arrive by email. Never offer to pay again for the same order.
